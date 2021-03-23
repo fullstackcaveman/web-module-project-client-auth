@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const useStyles = makeStyles({
 	root: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles({
 });
 
 const Friend = (props) => {
-	const { name, email, age } = props;
+	const { name, email, age, id, deleteFriend } = props;
 	const classes = useStyles();
 
 	return (
@@ -35,6 +36,7 @@ const Friend = (props) => {
 						<a href={`mailto:${email}`}>{email}</a>
 					</Typography>
 				</CardContent>
+				<DeleteForeverIcon onClick={() => deleteFriend(id)} />
 			</Card>
 		</div>
 	);

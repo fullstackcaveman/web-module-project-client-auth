@@ -25,14 +25,27 @@ const FriendsList = () => {
 				});
 		};
 		getFriends();
-	}, []);
+	}, [friends]);
+
+	const deleteFriend = (id) => {
+		axiosWithAuth()
+			.delete(`/api/friends/${id}`)
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((err) => {
+				console.log(err.response);
+			});
+	};
 
 	return (
 		<div className='friendslist'>
 			<h1>Friends</h1>
 			<div className='friend'>
 				{friends.map((friend) => {
-					return <Friend key={friend.name} {...friend} />;
+					return (
+						<Friend key={friend.id} {...friend} deleteFriend={deleteFriend} />
+					);
 				})}
 			</div>
 		</div>
