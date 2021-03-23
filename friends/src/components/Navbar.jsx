@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import { Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -47,18 +46,6 @@ export default function Navbar(props) {
 		setAnchorEl(null);
 	};
 
-	const handleLogin = () => {
-		window.location.href = '/login';
-	};
-
-	const handleClick = (route) => {
-		if (route === 'home') {
-			window.location.href = '/';
-		} else if (route === 'friends') {
-			window.location.href = '/friendslist';
-		}
-	};
-
 	const menuId = 'primary-search-account-menu';
 	const renderMenu = (
 		<Menu
@@ -78,6 +65,11 @@ export default function Navbar(props) {
 			<MenuItem>
 				<Link to='/friendslist' className='menulink'>
 					Friends List
+				</Link>
+			</MenuItem>
+			<MenuItem>
+				<Link to='/add-friend' className='menulink'>
+					Add Friend
 				</Link>
 			</MenuItem>
 			<MenuItem onClick={() => logout()}>Logout</MenuItem>

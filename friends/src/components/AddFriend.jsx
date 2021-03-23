@@ -1,26 +1,36 @@
-import React from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 
 import { Avatar, Button, Grid, Paper, TextField } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import { Link } from 'react-router-dom';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
-const Login = (props) => {
-	const { values, change, disabled } = props;
+const initialNewFriend = {
+	name: '',
+	email: '',
+	age: '',
+};
+
+const AddFriend = () => {
+	const [formValues, setFormValues] = useState(initialNewFriend);
+
+	const inputChange = (name, value) => {
+		setFormValues({ ...formValues, [name]: value });
+	};
 
 	const onChange = (e) => {
 		const { name, value, type, checked } = e.target;
 		const valueToUse = type === 'checkbox' ? checked : value;
-		change(name, valueToUse);
+		inputChange(name, valueToUse);
 	};
 
-	const login = (e) => {
+	const addFriend = (e) => {
 		e.preventDefault();
 
-		axios
-			.post('http://localhost:5000/api/login', values)
+		axiosWithAuth()
+			.post('/api/friends', formValues)
 			.then((res) => {
-				localStorage.setItem('token', res.data.payload);
+				setFormValues(initialNewFriend);
 				window.location.href = '/friendslist';
 			})
 			.catch((err) => {
@@ -53,32 +63,45 @@ const Login = (props) => {
 					<Avatar style={avatarStyle}>
 						<PersonIcon />
 					</Avatar>
-					<h2>Login</h2>
+					<h2>Add Friend</h2>
 				</Grid>
 
-				<form onSubmit={login}>
+				<form onSubmit={addFriend}>
 					<TextField
 						style={inputStyle}
-						label='Username'
-						placeholder='Username'
+						label='Name'
+						placeholder='Name'
 						variant='outlined'
 						size='small'
 						fullWidth
-						name='username'
-						value={values.username}
+						name='name'
+						value={formValues.name}
 						onChange={onChange}
 					/>
 
 					<TextField
 						style={inputStyle}
-						label='Password'
-						placeholder='Password'
+						label='Email'
+						placeholder='Email'
 						variant='outlined'
 						size='small'
 						fullWidth
-						name='password'
-						value={values.password}
-						type='password'
+						name='email'
+						value={formValues.password}
+						type='email'
+						onChange={onChange}
+					/>
+
+					<TextField
+						style={inputStyle}
+						label='Age'
+						placeholder='Age'
+						variant='outlined'
+						size='small'
+						fullWidth
+						name='age'
+						value={formValues.password}
+						type='text'
 						onChange={onChange}
 					/>
 
@@ -88,16 +111,15 @@ const Login = (props) => {
 						color='primary'
 						variant='contained'
 						fullWidth
-						disabled={disabled}
 					>
 						Submit
 					</Button>
 
-					<Link to='/'>CANCEL</Link>
+					<Link to='/friendslist'>CANCEL</Link>
 				</form>
 			</Paper>
 		</Grid>
 	);
 };
 
-export default Login;
+export default AddFriend;

@@ -9,6 +9,7 @@ import Login from './components/Login';
 
 import './App.css';
 import FriendsList from './components/FriendsList';
+import AddFriend from './components/AddFriend';
 
 const initialFormValues = {
 	username: '',
@@ -39,7 +40,10 @@ function App() {
 			<Navbar logout={logout} />
 			<Switch>
 				<PrivateRoute exact path='/friendslist' component={FriendsList} />
-				<Route exact path='/' />
+				<PrivateRoute exact path='/add-friend' component={AddFriend} />
+				<Route exact path='/'>
+					<Login values={formValues} change={inputChange} />
+				</Route>
 				<Route path='/login'>
 					<Login values={formValues} change={inputChange} />
 				</Route>
