@@ -32,7 +32,7 @@ const FriendsList = () => {
 			<h1>Friends</h1>
 			<div className='friend'>
 				{friends.map((friend) => {
-					return <Friend key={friend.id} {...friend} />;
+					return <Friend key={friend.name} {...friend} />;
 				})}
 			</div>
 		</div>

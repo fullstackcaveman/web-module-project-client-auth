@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import { Button, Link } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	grow: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar(props) {
 	const { logout } = props;
 	const classes = useStyles();
-	const [anchorEl, setAnchorEl] = useState(null);
+	const [anchorEl, setAnchorEl] = useState(false);
 
 	const isMenuOpen = anchorEl;
 
@@ -50,6 +51,14 @@ export default function Navbar(props) {
 		window.location.href = '/login';
 	};
 
+	const handleClick = (route) => {
+		if (route === 'home') {
+			window.location.href = '/';
+		} else if (route === 'friends') {
+			window.location.href = '/friendslist';
+		}
+	};
+
 	const menuId = 'primary-search-account-menu';
 	const renderMenu = (
 		<Menu
@@ -61,6 +70,16 @@ export default function Navbar(props) {
 			open={isMenuOpen}
 			onClose={handleMenuClose}
 		>
+			<MenuItem>
+				<Link to='/' className='menulink'>
+					Home
+				</Link>
+			</MenuItem>
+			<MenuItem>
+				<Link to='/friendslist' className='menulink'>
+					Friends List
+				</Link>
+			</MenuItem>
 			<MenuItem onClick={() => logout()}>Logout</MenuItem>
 		</Menu>
 	);
@@ -87,14 +106,9 @@ export default function Navbar(props) {
 								<AccountCircle />
 							</IconButton>
 						) : (
-							<Button
-								onClick={handleLogin}
-								variant='contained'
-								size='small'
-								color='primary'
-							>
+							<Link to='/login' className='navlink'>
 								Login
-							</Button>
+							</Link>
 						)}
 					</div>
 				</Toolbar>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 
 import { axiosWithAuth } from './utils/axiosWithAuth';
@@ -17,14 +17,9 @@ const initialFormValues = {
 
 function App() {
 	const [formValues, setFormValues] = useState(initialFormValues);
-	const [user, setUser] = useState();
 
 	const inputChange = (name, value) => {
 		setFormValues({ ...formValues, [name]: value });
-	};
-
-	const formSubmit = (newUser) => {
-		setUser(newUser);
 	};
 
 	const logout = () => {
@@ -40,22 +35,16 @@ function App() {
 	};
 
 	return (
-		<Router>
-			<div className='App'>
-				<Navbar logout={logout} />
-				<Switch>
-					<PrivateRoute exact path='/friendslist' component={FriendsList} />
-					<Route exact path='/' />
-					<Route path='/login'>
-						<Login
-							values={formValues}
-							change={inputChange}
-							submit={formSubmit}
-						/>
-					</Route>
-				</Switch>
-			</div>
-		</Router>
+		<div className='App'>
+			<Navbar logout={logout} />
+			<Switch>
+				<PrivateRoute exact path='/friendslist' component={FriendsList} />
+				<Route exact path='/' />
+				<Route path='/login'>
+					<Login values={formValues} change={inputChange} />
+				</Route>
+			</Switch>
+		</div>
 	);
 }
 
