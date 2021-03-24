@@ -31,7 +31,7 @@ const FriendsList = () => {
 		axiosWithAuth()
 			.delete(`/api/friends/${id}`)
 			.then((res) => {
-				console.log(res);
+				setFriends(res.data);
 			})
 			.catch((err) => {
 				console.log(err.response);
